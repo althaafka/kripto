@@ -27,6 +27,7 @@
                       <li><a class="dropdown-item" href="#">Auto-key Vigenere Cipher</a></li>
                       <li><a class="dropdown-item" href="#">Extended Vigenere Cipher</a></li>
                       <li><a class="dropdown-item" href="#">Playfair Cipher</a></li>
+                      <li><a class="dropdown-item" href="#">Affine Cipher</a></li>
                     </ul>
                   </div>
             </div>
@@ -58,6 +59,10 @@
             <label for="key" class="col-sm-2 col-form-label">Key</label>
             <div class="col-sm mb-4">
               <input type="text" class="form-control" id="key">
+            </div>
+            <label for="key" class="col-sm-2 col-form-label d-none keyB">Key</label>
+            <div class="col-sm mb-4 d-none keyB">
+              <input type="text" class="form-control" id="keyB">
             </div>
             <div class="form-check form-switch px-5 mb-3">
                 <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" checked>
@@ -96,6 +101,16 @@
             }
         });
 
+        $("#jenisCipher").next(".dropdown-menu").children().on("click",function(){
+            console.log($(this).text());
+            if ($(this).text() == "Affine Cipher"){
+                console.log("Affine");
+                $(".keyB").removeClass("d-none");
+            } else {
+                $(".keyB").addClass("d-none")
+            }
+        });
+
         let alg_dic = {
             "Vigenere Cipher Standard": "vigenere",
             "Auto-key Vigenere Cipher": "autokey",
@@ -116,16 +131,28 @@
         $('#btn-en').on('click', function(e){
             e.preventDefault();
             const alg = alg_dic[$("#jenisCipher").text()];
+            let data = {};
+
+            if (alg == "affine"){
+                data = {
+                    keyM: $("#key").val(),
+                    keyB: $("#keyB").val(),
+                    input: $("#exampleFormControlTextarea1").val()
+                }
+            }
+            else {
+                data = {
+                    key: $("#key").val(),
+                    input: $("#exampleFormControlTextarea1").val()
+                }
+            }
             
             fetch(`/encrypt/${alg}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    key: $("#key").val(),
-                    input: $("#exampleFormControlTextarea1").val()
-                })
+                body: JSON.stringify(data)
             }).then(response => response.json()).then(data => {
                 console.log(data);
                 showAnswer(data, $('#jenisInput').text());
