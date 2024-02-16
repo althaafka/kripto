@@ -36,3 +36,18 @@ app.post("/encrypt/:alg", function (req, res) {
         sendData(res, "invalid algorithm");
     }
 });
+
+app.post("/decrypt/:alg", function (req, res) {
+    const alg = req.params.alg;
+
+    let key = req.body.key.replace(/\s/g,'') ;
+    let input = req.body.input.replace(/\s/g,'') ;
+
+    if (alg == "vigenere") {
+        sendData(res, "vigenere");
+    } else if (alg == "playfair") {
+        sendData(res, playfair.decrypt(req.body.key, req.body.input));
+    }else {
+        sendData(res, "invalid algorithm");
+    }
+});
