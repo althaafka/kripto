@@ -26,6 +26,7 @@
                       <li><a class="dropdown-item" href="#">Vigenere Cipher Standard</a></li>
                       <li><a class="dropdown-item" href="#">Auto-key Vigenere Cipher</a></li>
                       <li><a class="dropdown-item" href="#">Extended Vigenere Cipher</a></li>
+                      <li><a class="dropdown-item" href="#">Playfair Cipher</a></li>
                     </ul>
                   </div>
             </div>
@@ -107,10 +108,11 @@
                 },
                 body: JSON.stringify({
                     key: $("#key").val(),
-                    text: $("#exampleFormControlTextarea1").val()
+                    input: $("#exampleFormControlTextarea1").val()
                 })
             }).then(response => response.json()).then(data => {
                 console.log(data);
+                showAnswer(data, $('jenisInput').text());
             }).catch(err => {
                 console.log(err);
             });

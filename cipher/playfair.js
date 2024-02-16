@@ -1,9 +1,17 @@
-const encryptPlayfair = (key, input) => {
+module.exports = {
+    encrypt: (key, input) => {
+        return encrypt(key, input);
+    },
+
+    decrypt: (key, input) => {
+        return decrypt(key, input);
+    }
+}
+
+const encrypt = (key, input) => {
     let keyMatrix = generateKeyMatrix(key);
     let bigram = generateBigram(input);
     let result = "";
-    console.log("keyM", keyMatrix);
-    console.log("bigram", bigram);
 
     for (let i = 0; i < bigram.length; i++) {
         let first= getCharIndex(keyMatrix, bigram[i][0]);
@@ -16,7 +24,6 @@ const encryptPlayfair = (key, input) => {
             first[1] = first[1] != 4? first[1]+1 : 0;
             second[1] = second[1] != 4? second[1]+1 : 0;
         } else {
-            console.log(first,second);
             let temp = first[1];
             first[1] = second[1];
             second[1] = temp;
@@ -29,7 +36,7 @@ const encryptPlayfair = (key, input) => {
 
 }
 
-const decryptPlayfair = (key, input) => {
+const decrypt= (key, input) => {
     let keyMatrix = generateKeyMatrix(key);
     let bigram = generateBigram(input);
     let result = "";
@@ -45,7 +52,6 @@ const decryptPlayfair = (key, input) => {
             first[1] = first[1] != 4? first[1]-1 : 4;
             second[1] = second[1] != 4? second[1]-1 : 4;
         } else {
-            console.log(first,second);
             let temp = first[1];
             first[1] = second[1];
             second[1] = temp;
@@ -107,5 +113,5 @@ const getCharIndex = (matrix, char) => {
 // let formatedKey = key.replaceAll('j','').replace(/\s/g,'');
 // console.log(generateKeyMatrix(formatedKey));
 // console.log(generateBigram("temui ibu nanti malam".replace(/\s/g,'')));
-console.log(encryptPlayfair("alngeshpubcdfikmoqrtvwxyz","temuiibunantimalam"))
-console.log(decryptPlayfair("alngeshpubcdfikmoqrtvwxyz", "zbrsfykupglgrkvsnlqv"))
+console.log(encrypt("alngeshpubcdfikmoqrtvwxyz","temuiibunantimalam"))
+console.log(decrypt("alngeshpubcdfikmoqrtvwxyz", "zbrsfykupglgrkvsnlqv"))
