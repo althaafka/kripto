@@ -9,8 +9,6 @@ const encryptPlayfair = (key, input) => {
         let first= getCharIndex(keyMatrix, bigram[i][0]);
         let second = getCharIndex(keyMatrix, bigram[i][1]);
 
-        let cipherIndex = []
-
         if (first[1] == second[1]){
             first[0] = first[0] != 4? first[0]+1 : 0;
             second[0] = second[0] != 4? second[0]+1 : 0;
@@ -22,7 +20,6 @@ const encryptPlayfair = (key, input) => {
             let temp = first[1];
             first[1] = second[1];
             second[1] = temp;
-            console.log(first,second);
         }
 
         result += keyMatrix[first[0]][first[1]] + keyMatrix[second[0]][second[1]]
@@ -30,6 +27,34 @@ const encryptPlayfair = (key, input) => {
 
     return result;
 
+}
+
+const decryptPlayfair = (key, input) => {
+    let keyMatrix = generateKeyMatrix(key);
+    let bigram = generateBigram(input);
+    let result = "";
+
+    for (let i = 0; i < bigram.length; i++) {
+        let first= getCharIndex(keyMatrix, bigram[i][0]);
+        let second = getCharIndex(keyMatrix, bigram[i][1]);
+
+        if (first[1] == second[1]){
+            first[0] = first[0] != 0? first[0]-1 : 4;
+            second[0] = second[0] != 0? second[0]-1 : 4;
+        } else if (first[0] == second[0]){
+            first[1] = first[1] != 4? first[1]-1 : 4;
+            second[1] = second[1] != 4? second[1]-1 : 4;
+        } else {
+            console.log(first,second);
+            let temp = first[1];
+            first[1] = second[1];
+            second[1] = temp;
+        }
+
+        result += keyMatrix[first[0]][first[1]] + keyMatrix[second[0]][second[1]]
+    }
+
+    return result;
 }
 
 const generateKeyMatrix = (key) => {
@@ -83,3 +108,4 @@ const getCharIndex = (matrix, char) => {
 // console.log(generateKeyMatrix(formatedKey));
 // console.log(generateBigram("temui ibu nanti malam".replace(/\s/g,'')));
 console.log(encryptPlayfair("alngeshpubcdfikmoqrtvwxyz","temuiibunantimalam"))
+console.log(decryptPlayfair("alngeshpubcdfikmoqrtvwxyz", "zbrsfykupglgrkvsnlqv"))
