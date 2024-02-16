@@ -1,3 +1,13 @@
+module.exports = {
+    encrypt: (m, b, input) => {
+        return encrypt(m, b, input);
+    },
+
+    decrypt: (m, b, input) => {
+        return decrypt(m, b, input);
+    }
+}
+
 const encrypt = (m, b, input) =>{
     let result = "";
     let arr = stringToArrNumber(input);

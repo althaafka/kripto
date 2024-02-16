@@ -5,7 +5,7 @@ const path = require('path');
 app.use(express.json());
 
 const playfair = require('./cipher/playfair');
-const { send } = require('process');
+const affine = require('./cipher/affine');
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/index.html'));
@@ -31,9 +31,10 @@ app.post("/encrypt/:alg", function (req, res) {
     if (alg == "vigenere") {
         sendData(res, "vigenere");
     } else if (alg == "playfair") {
-        sendData(res, playfair.encrypt(req.body.key, req.body.input));
+        sendData(res, playfair.encrypt(key, input));
     } else if (alg == "affine"){
-        sendData(res, req.body);
+        console.log(req.body.keyM, req.body.keyB, req.body.input);
+        sendData(res, affine.encrypt(req.body.keyM, req.body.keyB, req.body.input));
     } else {
         sendData(res, "invalid algorithm");
     }
@@ -42,14 +43,16 @@ app.post("/encrypt/:alg", function (req, res) {
 app.post("/decrypt/:alg", function (req, res) {
     const alg = req.params.alg;
 
-    let key = req.body.key.replace(/\s/g,'') ;
-    let input = req.body.input.replace(/\s/g,'') ;
-
+    let key = req.body.key && req.body.key.replace(/\s/g,'');
+    let input =  req.body.input && req.body.input.replace(/\s/g,'');
+    
     if (alg == "vigenere") {
         sendData(res, "vigenere");
     } else if (alg == "playfair") {
-        sendData(res, playfair.decrypt(req.body.key, req.body.input));
-    }else {
+        sendData(res, playfair.decrypt(key, input));
+    } else if(alg == "affine"){
+        sendData(res, affine.decrypt(req.body.keyM, req.body.keyB, req.body.input));
+    } else {
         sendData(res, "invalid algorithm");
     }
 });

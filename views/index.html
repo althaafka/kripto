@@ -135,8 +135,8 @@
 
             if (alg == "affine"){
                 data = {
-                    keyM: $("#key").val(),
-                    keyB: $("#keyB").val(),
+                    keyM: Number($("#key").val()),
+                    keyB: Number($("#keyB").val()),
                     input: $("#exampleFormControlTextarea1").val()
                 }
             }
@@ -165,15 +165,27 @@
             e.preventDefault();
             const alg = alg_dic[$("#jenisCipher").text()];
 
+            let data = {};
+
+            if (alg == "affine"){
+                data = {
+                    keyM: Number($("#key").val()),
+                    keyB: Number($("#keyB").val()),
+                    input: $("#exampleFormControlTextarea1").val()
+                }
+            } else {
+                data = {
+                    key: $("#key").val(),
+                    input: $("#exampleFormControlTextarea1").val()
+                }
+            }
+
             fetch(`/decrypt/${alg}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    key: $("#key").val(),
-                    input: $("#exampleFormControlTextarea1").val()
-                })
+                body: JSON.stringify(data)
             }).then(response => response.json()).then(data => {
                 console.log(data);
                 showAnswer(data, $('#jenisInput').text());
