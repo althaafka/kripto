@@ -44,6 +44,6 @@ const modInverse = (a, m) => {
     return 1;
 }
 
-console.log(stringToArrNumber("kripto"));
-console.log(encrypt(7, 10, "kripto"));
-console.log(decrypt(7, 10, "czolne"));
+// console.log(stringToArrNumber("kripto"));
+// console.log(encrypt(7, 10, "kripto"));
+// console.log(decrypt(7, 10, "czolne"));

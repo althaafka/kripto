@@ -14,12 +14,7 @@ let rotor3 = "udtlozjmxgsyprhqvfwbaecnik"
 let spinCount = 0
 
 const encrypt = (key, input) => {
-    rotor1 = "nxjzfvhyqcmsbadlpueigkrotw"
-    rotor2 = "frmlubvyqgazpstjhxwiokcedn"
-    rotor3 = "udtlozjmxgsyprhqvfwbaecnik"
-    spinCount = 0
-
-
+    resetRotor()
     changeRotor(key)
 
     let result = []
@@ -37,11 +32,7 @@ const encrypt = (key, input) => {
 }
 
 const decrypt = (key, input) => {
-    rotor1 = "nxjzfvhyqcmsbadlpueigkrotw"
-    rotor2 = "frmlubvyqgazpstjhxwiokcedn"
-    rotor3 = "udtlozjmxgsyprhqvfwbaecnik"
-    spinCount = 0
-
+    resetRotor()
     changeRotor(key)
     
     let result = []
@@ -77,10 +68,17 @@ const spinRotor = () => {
 }
 
 const changeRotor = (key) => {
-    rotor1 = rotor1.slice(rotor1.indexOf(key[0])) + rotor1.slice(0,rotor1.indexOf(key[0]))
-    rotor2 = rotor2.slice(rotor2.indexOf(key[1])) + rotor2.slice(0,rotor2.indexOf(key[1]))
-    rotor3 = rotor3.slice(rotor3.indexOf(key[2])) + rotor3.slice(0,rotor3.indexOf(key[2]))
+    rotor1 = rotor1.slice(key[0].charCodeAt(0)-97) + rotor1.slice(0,key[0].charCodeAt(0)-97)
+    rotor2 = rotor2.slice(key[1].charCodeAt(0)-97) + rotor2.slice(0,key[1].charCodeAt(0)-97)
+    rotor3 = rotor3.slice(key[2].charCodeAt(0)-97) + rotor3.slice(0,key[2].charCodeAt(0)-97)
+}
+
+const resetRotor = () => {
+    rotor1 = "nxjzfvhyqcmsbadlpueigkrotw"
+    rotor2 = "frmlubvyqgazpstjhxwiokcedn"
+    rotor3 = "udtlozjmxgsyprhqvfwbaecnik"
+    spinCount = 0
 }
 
 console.log(encrypt("key", "kriptoo"))
-console.log(decrypt("key", "mryhpbw"))
+console.log(decrypt("key", "ihpuznc"))
