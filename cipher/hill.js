@@ -32,11 +32,8 @@ const decrypt = (key, input) => {
     let inputMatrix = strToMatrix(input, false)
 
     let detK = math.det(keyMatrix)
-    console.log(detK)
     let kInverse = math.round(math.multiply(detK, math.inv(keyMatrix)))
     detK = math.invmod(detK % 26, 26)
-    console.log(detK)
-    console.log(math.multiply(math.mod(kInverse, 26), detK))
     kInverse = math.multiply(math.mod(kInverse, 26), detK)
 
     let result = []
