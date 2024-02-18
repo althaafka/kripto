@@ -113,5 +113,5 @@ const getCharIndex = (matrix, char) => {
 // let formatedKey = key.replaceAll('j','').replace(/\s/g,'');
 // console.log(generateKeyMatrix(formatedKey));
 // console.log(generateBigram("temui ibu nanti malam".replace(/\s/g,'')));
-console.log(encrypt("alngeshpubcdfikmoqrtvwxyz","temuiibunantimalam"))
-console.log(decrypt("alngeshpubcdfikmoqrtvwxyz", "zbrsfykupglgrkvsnlqv"))
+// console.log(encrypt("alngeshpubcdfikmoqrtvwxyz","temuiibunantimalam"))
+// console.log(decrypt("alngeshpubcdfikmoqrtvwxyz", "zbrsfykupglgrkvsnlqv"))

@@ -6,6 +6,8 @@ app.use(express.json());
 
 const playfair = require('./cipher/playfair');
 const affine = require('./cipher/affine');
+const hill = require('./cipher/hill');
+const enigma = require('./cipher/enigma');
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/index.html'));
@@ -35,6 +37,10 @@ app.post("/encrypt/:alg", function (req, res) {
     } else if (alg == "affine"){
         console.log(req.body.keyM, req.body.keyB, req.body.input);
         sendData(res, affine.encrypt(req.body.keyM, req.body.keyB, req.body.input));
+    } else if (alg == "hill"){
+        sendData(res, hill.encrypt(key, input));
+    } else if (alg == "enigma"){
+        sendData(res, enigma.encrypt(key, input));
     } else {
         sendData(res, "invalid algorithm");
     }
@@ -52,6 +58,10 @@ app.post("/decrypt/:alg", function (req, res) {
         sendData(res, playfair.decrypt(key, input));
     } else if(alg == "affine"){
         sendData(res, affine.decrypt(req.body.keyM, req.body.keyB, req.body.input));
+    } else if (alg == "hill"){
+        sendData(res, hill.decrypt(key, input));
+    } else if (alg == "enigma"){
+        sendData(res, enigma.decrypt(key, input));
     } else {
         sendData(res, "invalid algorithm");
     }
