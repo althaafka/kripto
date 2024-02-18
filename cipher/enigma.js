@@ -80,5 +80,5 @@ const resetRotor = () => {
     spinCount = 0
 }
 
-console.log(encrypt("key", "kriptoo"))
-console.log(decrypt("key", "ihpuznc"))
+// console.log(encrypt("key", "kriptoo"))
+// console.log(decrypt("key", "ihpuznc"))

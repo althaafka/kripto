@@ -49,8 +49,8 @@ const decrypt= (key, input) => {
             first[0] = first[0] != 0? first[0]-1 : 4;
             second[0] = second[0] != 0? second[0]-1 : 4;
         } else if (first[0] == second[0]){
-            first[1] = first[1] != 4? first[1]-1 : 4;
-            second[1] = second[1] != 4? second[1]-1 : 4;
+            first[1] = first[1] != 0? first[1]-1 : 4;
+            second[1] = second[1] != 0? second[1]-1 : 4;
         } else {
             let temp = first[1];
             first[1] = second[1];
@@ -115,3 +115,5 @@ const getCharIndex = (matrix, char) => {
 // console.log(generateBigram("temui ibu nanti malam".replace(/\s/g,'')));
 // console.log(encrypt("alngeshpubcdfikmoqrtvwxyz","temuiibunantimalam"))
 // console.log(decrypt("alngeshpubcdfikmoqrtvwxyz", "zbrsfykupglgrkvsnlqv"))
+// console.log(encrypt("kentang","pakaian"))
+// console.log(decrypt("kentang","ukekoecn"))
