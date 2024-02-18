@@ -2,11 +2,11 @@ const math = require('mathjs');
 
 module.exports = {
     encrypt: (key, input) => {
-        return encrypt(m, b, input);
+        return encrypt(key, input);
     },
 
     decrypt: (key, input) => {
-        return decrypt(m, b, input);
+        return decrypt(key, input);
     }
 }
 
