@@ -19,6 +19,9 @@ const encrypt = (key, input) => {
     rotor3 = "udtlozjmxgsyprhqvfwbaecnik"
     spinCount = 0
 
+
+    changeRotor(key)
+
     let result = []
 
     for (let i=0; i<input.length; i++){
@@ -38,6 +41,8 @@ const decrypt = (key, input) => {
     rotor2 = "frmlubvyqgazpstjhxwiokcedn"
     rotor3 = "udtlozjmxgsyprhqvfwbaecnik"
     spinCount = 0
+
+    changeRotor(key)
     
     let result = []
 
@@ -71,7 +76,11 @@ const spinRotor = () => {
     }
 }
 
-console.log(encrypt("key", "kriptoo"))
-console.log(decrypt("key", "qrzcpjz"))
+const changeRotor = (key) => {
+    rotor1 = rotor1.slice(rotor1.indexOf(key[0])) + rotor1.slice(0,rotor1.indexOf(key[0]))
+    rotor2 = rotor2.slice(rotor2.indexOf(key[1])) + rotor2.slice(0,rotor2.indexOf(key[1]))
+    rotor3 = rotor3.slice(rotor3.indexOf(key[2])) + rotor3.slice(0,rotor3.indexOf(key[2]))
+}
 
-// console.log('s'.charCodeAt(0) - 97)
+console.log(encrypt("key", "kriptoo"))
+console.log(decrypt("key", "mryhpbw"))
