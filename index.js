@@ -27,8 +27,10 @@ const sendData = (res, data) => {
 app.post("/encrypt/:alg", function (req, res) {
     const alg = req.params.alg;
 
-    let key = req.body.key && req.body.key.replace(/\s/g,'');
-    let input =  req.body.input && req.body.input.replace(/\s/g,'');
+    if (alg != "super"){
+        let key = req.body.key && req.body.key.replace(/\s/g,'').toLowerCase().replace(/[^a-z]+/gi, '');
+        let input =  req.body.input && req.body.input.replace(/\s/g,'').toLowerCase().replace(/[^a-z]+/gi, '');
+    }
 
     if (alg == "vigenere") {
         sendData(res, "vigenere");
@@ -49,8 +51,10 @@ app.post("/encrypt/:alg", function (req, res) {
 app.post("/decrypt/:alg", function (req, res) {
     const alg = req.params.alg;
 
-    let key = req.body.key && req.body.key.replace(/\s/g,'');
-    let input =  req.body.input && req.body.input.replace(/\s/g,'');
+    if (alg != "super"){
+        let key = req.body.key && req.body.key.replace(/\s/g,'').toLowerCase().replace(/[^a-z]+/gi, '');
+        let input =  req.body.input && req.body.input.replace(/\s/g,'').toLowerCase().replace(/[^a-z]+/gi, '');
+    }
     
     if (alg == "vigenere") {
         sendData(res, "vigenere");
