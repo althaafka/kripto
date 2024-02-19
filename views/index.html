@@ -134,12 +134,14 @@
             "Enigma Cipher": "enigma"
         }
 
+        let input = ''
+
         const showAnswer = (data, jenisInput) => {
             console.log(jenisInput);
-            if (jenisInput == "Teks"){
+            // if (jenisInput == "Teks"){
                 $(".answer").removeClass("invisible");
                 $("#output-text").text(data.data);
-            }
+            // }
         }
 
         $('#btn-en').on('click', function(e){
@@ -157,7 +159,7 @@
             else {
                 data = {
                     key: $("#key").val(),
-                    input: $("#exampleFormControlTextarea1").val()
+                    input: input
                 }
             }
             
@@ -190,7 +192,7 @@
             } else {
                 data = {
                     key: $("#key").val(),
-                    input: $("#exampleFormControlTextarea1").val()
+                    input: input
                 }
             }
 
@@ -207,6 +209,35 @@
                 console.log(err);
             });
         });
+
+        $("#download").on("click", function(){
+            if ($('#jenisInput').text() == "Teks"){
+                const text = $("#output-text").text();
+                const blob = new Blob([text], {type: "text/plain"});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "output.txt";
+                a.click();
+
+            }
+        });
+
+        $("#formFile").change(function(){
+            const file = $(this).prop("files")[0];
+            const reader = new FileReader();
+            reader.onload = function(e){
+                const content = reader.result;
+                input = content;
+                console.log(content);
+            }
+            reader.readAsText(file, "UTF-8");
+        });
+
+        $("#exampleFormControlTextarea1").on("input", function(){
+            input = $(this).val();
+        });
+        
     </script>
 </body>
 </html>
