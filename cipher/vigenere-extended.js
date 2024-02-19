@@ -41,9 +41,11 @@ const modNonNegative = (n, m) => {
 }
 
 // Debugging
-let key = "cryptii";
-let input = "The quick brown fox jumps over 13 lazy dogs.";
-let cipher = encrypt(input, key);
-console.log("Encrypted:", cipher);
-let plain = decrypt(cipher, key);
-console.log("Decrypted:", plain);
+// console.log(" ------- Vigenere Extended ---------- ");
+// let key = "cryptii";
+// let input = "The quick brown fox jumps over 13 lazy dogs.";
+// let cipher = encrypt(input, key);
+// console.log("Encrypted:", cipher);
+// let plain = decrypt(cipher, key);
+// console.log("Decrypted:", plain);
+// console.log(" ------------------------------------ ");
