@@ -1,5 +1,3 @@
-const { re, mod } = require("mathjs");
-
 module.exports = {
     encrypt: (input, key) => {
         return encrypt(input, key);
