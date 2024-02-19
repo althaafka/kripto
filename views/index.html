@@ -57,6 +57,11 @@
                         <input class="form-control" type="file" id="formFile">
                     </div>
                 </div>
+                <div class="card mb-3 d-none file-plaintext">
+                    <div class="card-body overflow-auto" style="max-height: 500px;">
+                        <p class="card-text" id="file-input">Hasil enkripsi akan muncul disini</p>
+                    </div>
+                </div>
             </div>
             <label for="key" class="col-sm-2 col-form-label">Key</label>
             <div class="col-sm mb-4">
@@ -230,6 +235,8 @@
                 const content = reader.result;
                 input = content;
                 console.log(content);
+                $(".file-plaintext").removeClass("d-none");
+                $("#file-input").text(content);
             }
             reader.readAsText(file, "UTF-8");
         });
