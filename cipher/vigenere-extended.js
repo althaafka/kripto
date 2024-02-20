@@ -12,9 +12,14 @@ module.exports = {
 const encrypt = (input, key) => {
     const cipher = [];
     let charIdx = 0;
-
-    for (let i = 0; i < input.length; i++) {
-        const p = input[i].charCodeAt(0);
+    let p = 0;
+    
+    for (let i = 0; i < input.length; i++) {;
+        if (typeof input[i] === 'object') {
+            p = Object.values(input[i]);
+        } else {
+            p = input[i].charCodeAt(0);
+        }
         const k = key[charIdx % key.length].charCodeAt(0);
         cipher.push(modNonNegative((p + k), 256));
 
@@ -26,9 +31,14 @@ const encrypt = (input, key) => {
 const decrypt = (cipher, key) => {
     const plaintext = [];
     let charIdx = 0;
+    let c = 0;
 
     for (let i = 0; i < cipher.length; i++) {
-        const c = cipher[i].charCodeAt(0);
+        if (typeof cipher[i] === 'object') {
+            c = Object.values(cipher[i]);
+        } else {
+            c = cipher[i].charCodeAt(0);
+        }
         const k = key[charIdx % key.length].charCodeAt(0);
         plaintext.push(modNonNegative((c - k), 256));
         charIdx++;
@@ -41,11 +51,11 @@ const modNonNegative = (n, m) => {
 }
 
 // Debugging
-// console.log(" ------- Vigenere Extended ---------- ");
-// let key = "cryptii";
-// let input = "The quick brown fox jumps over 13 lazy dogs.";
-// let cipher = encrypt(input, key);
-// console.log("Encrypted:", cipher);
-// let plain = decrypt(cipher, key);
-// console.log("Decrypted:", plain);
-// console.log(" ------------------------------------ ");
+console.log(" ------- Vigenere Extended ---------- ");
+let key = "cryptii";
+let input = "The quick brown fox jumps over 13 lazy dogs.";
+let cipher = encrypt(input, key);
+console.log("Encrypted:", cipher);
+let plain = decrypt(cipher, key);
+console.log("Decrypted:", plain);
+console.log(" ------------------------------------ ");
