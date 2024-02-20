@@ -10,12 +10,14 @@ module.exports = {
 
 // Vignere standars for 26 alphabets
 const encrypt = (input, key) => {
+    console.log("-- Input", input);
+    console.log("-- Key", key);
     const cipher = [];
     let charIdx = 0;
 
-    // Remove non-alphabets and convert to lowercase
-    input = input.toLowerCase().replace(/[^a-z]/g, '');
-    key = key.toLowerCase().replace(/[^a-z]/g, '');
+    // // Remove non-alphabets and convert to lowercase
+    // input = input.toLowerCase().replace(/[^a-z]/g, '');
+    // key = key.toLowerCase().replace(/[^a-z]/g, '');
 
     for (let i = 0; i < input.length; i++) {
         const p = input[i].charCodeAt(0) - 97;
@@ -27,6 +29,7 @@ const encrypt = (input, key) => {
 
         charIdx++;
     }
+    console.log("-- Cipher", cipher);
     return String.fromCharCode(...cipher);
 }
 
@@ -34,9 +37,9 @@ const decrypt = (cipher, key) => {
     const plaintext = [];
     let charIdx = 0;
 
-    // Remove non-alphabets and convert to lowercase
-    cipher = cipher.toLowerCase().replace(/[^a-z]/g, '');
-    key = key.toLowerCase().replace(/[^a-z]/g, '');
+    // // Remove non-alphabets and convert to lowercase
+    // cipher = cipher.toLowerCase().replace(/[^a-z]/g, '');
+    // key = key.toLowerCase().replace(/[^a-z]/g, '');
 
     for (let i = 0; i < cipher.length; i++) {
         const c = cipher[i].charCodeAt(0) - 97;
@@ -61,4 +64,4 @@ const modNonNegative = (n, m) => {
 // let cipher = encrypt(input, key);
 // console.log("Encrypted:", cipher);
 // let plain = decrypt(cipher, key);
-// console.log("Decrypted:", plain);
+// console.log("Decrypted:", plain); 

@@ -1,10 +1,10 @@
 module.exports = {
-    encrypt: (input, key) => {
-        return encrypt(input, key);
+    encrypt: (input, key, numKey) => {
+        return encrypt(input, key, numKey);
     },
 
-    decrypt: (cipher, key) => {
-        return decrypt(cipher, key);
+    decrypt: (cipher, key, numKey) => {
+        return decrypt(cipher, key, numKey);
     }
 }
 
@@ -12,11 +12,13 @@ const vigenereExtended = require('./vigenere-extended.js');
 const transposition = require('./transposition.js');
 
 const encrypt = (plaintext, key, numKey) => {
+    console.log("Encrypt Super", plaintext, key, numKey);
     const output = vigenereExtended.encrypt(plaintext, key);
     return transposition.encrypt(output, numKey);
 };
 
 const decrypt = (cipher, key, numKey) => {
+    console.log("Decrypt Super", cipher, key, numKey);
     const output = transposition.decrypt(cipher, numKey);
     return vigenereExtended.decrypt(output, key);
 }

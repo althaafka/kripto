@@ -29,6 +29,7 @@
                       <li><a class="dropdown-item" href="#">Playfair Cipher</a></li>
                       <li><a class="dropdown-item" href="#">Affine Cipher</a></li>
                       <li><a class="dropdown-item" href="#">Hill Cipher</a></li>
+                      <li><a class="dropdown-item" href="#">Super Vigenere Cipher</a></li>
                       <li><a class="dropdown-item" href="#">Enigma Cipher</a></li>
                     </ul>
                   </div>
@@ -125,6 +126,9 @@
             if ($(this).text() == "Affine Cipher"){
                 console.log("Affine");
                 $(".keyB").removeClass("d-none");
+            } else if ($(this).text() == "Super Vigenere Cipher"){
+                console.log("Super");
+                $(".keyB").removeClass("d-none");
             } else {
                 $(".keyB").addClass("d-none")
             }
@@ -137,6 +141,7 @@
             "Playfair Cipher": "playfair",
             "Affine Cipher": "affine",
             "Hill Cipher": "hill",
+            "Super Vigenere Cipher": "super",
             "Enigma Cipher": "enigma"
         }
 
@@ -153,14 +158,24 @@
             let data = {};
 
             const isValid = inputValidation(input, $("#key").val(), $("#keyB").val());
+            console.log("algo", alg);
             if (!isValid){
                 return;
             }
             if (alg == "affine"){
+                console.log("Enkripsi Affine");
                 data = {
                     keyM: Number($("#key").val()),
                     keyB: Number($("#keyB").val()),
                     input: $('#jenisInput').text() == "Teks"? $("#exampleFormControlTextarea1").val().toLowerCase().replace(/[^a-z]+/gi, '') : input
+                }
+            } else if (alg == "super"){
+                console.log("Enkripsi Super");
+                data = {
+                    key: $("#key").val(),
+                    numKey: Number($("#keyB").val()),
+                    input: input
+
                 }
             } else if (alg == "extended"){
                 data = {
@@ -205,9 +220,16 @@
                     keyB: Number($("#keyB").val()),
                     input: $('#jenisInput').text() == "Teks"? $("#exampleFormControlTextarea1").val().toLowerCase().replace(/[^a-z]+/gi, '') : input
                 }
+            } else if (alg == "super"){
+                data = {
+                    key: $("#key").val(),
+                    numKey: Number($("#keyB").val()),
+                    input: input
+
+                }
             } else if (alg == "extended"){
                 data = {
-                    key: $("#key"),
+                    key: $("#key").val(),
                     input: input
                 }
             } else {
@@ -285,9 +307,16 @@
                     showError("Key berukuran 9");
                     return false;
                 }
+            } else if (alg == "super") {
+                if (key2.length == 0 || isNaN(Number(key2))){
+                    showError("Key 2 untuk menentukan banyak row harus diisi dengan angka!");
+                    return false;
+                }
             } else {
-                input = input.replace(/\s/g,'').toLowerCase().replace(/[^a-z]+/gi, '');
-                key1 = key1.replace(/\s/g,'').toLowerCase().replace(/[^a-z]+/gi, '');
+                if (alg !== "extended" && alg !== "super"){
+                    input = input.replace(/\s/g,'').toLowerCase().replace(/[^a-z]+/gi, '');
+                    key1 = key1.replace(/\s/g,'').toLowerCase().replace(/[^a-z]+/gi, '');
+                }
                 if(input.length == 0 || key1.length == 0){
                     showError("Input tidak boleh kosong");
                     return false;

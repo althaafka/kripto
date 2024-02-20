@@ -8,6 +8,11 @@ const playfair = require('./cipher/playfair');
 const affine = require('./cipher/affine');
 const hill = require('./cipher/hill');
 const enigma = require('./cipher/enigma');
+const vigenere = require('./cipher/vigenere');
+const autokey = require('./cipher/vigenere-autokey');
+const extended = require('./cipher/vigenere-extended');
+const supercipher = require('./cipher/super');
+const e = require('express');
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/index.html'));
@@ -37,9 +42,11 @@ app.post("/encrypt/:alg", function (req, res) {
     }
 
     if (alg == "vigenere") {
-        sendData(res, "vigenere");
+        sendData(res, vigenere.encrypt(input, key));
+    } else if (alg == "autokey") {
+        sendData(res, autokey.encrypt(input, key));
     } else if (alg == "extended") {
-        sendData(res, input);
+        sendData(res, extended.encrypt(input, key));
     } else if (alg == "playfair") {
         sendData(res, playfair.encrypt(key, input));
     } else if (alg == "affine"){
@@ -48,6 +55,9 @@ app.post("/encrypt/:alg", function (req, res) {
         sendData(res, hill.encrypt(key, input));
     } else if (alg == "enigma"){
         sendData(res, enigma.encrypt(key, input));
+    } else if (alg == "super"){
+        console.log("Masuk super");
+        sendData(res, supercipher.encrypt(req.body.input, req.body.key, req.body.numKey));
     } else {
         sendData(res, "invalid algorithm");
     }
@@ -64,9 +74,11 @@ app.post("/decrypt/:alg", function (req, res) {
     }
     
     if (alg == "vigenere") {
-        sendData(res, "vigenere");
+        sendData(res, vigenere.decrypt(input, key));
+    } else if (alg == "autokey") {
+        sendData(res, autokey.decrypt(input, key));
     } else if (alg == "extended") {
-        sendData(res, input);
+        sendData(res, extended.decrypt(input, key));
     } else if (alg == "playfair") {
         sendData(res, playfair.decrypt(key, input));
     } else if(alg == "affine"){
@@ -75,6 +87,8 @@ app.post("/decrypt/:alg", function (req, res) {
         sendData(res, hill.decrypt(key, input));
     } else if (alg == "enigma"){
         sendData(res, enigma.decrypt(key, input));
+    } else if (alg == "super"){
+        sendData(res, supercipher.decrypt(req.body.input, req.body.key, req.body.numKey));
     } else {
         sendData(res, "invalid algorithm");
     }
