@@ -26,18 +26,23 @@ const sendData = (res, data) => {
 
 app.post("/encrypt/:alg", function (req, res) {
     const alg = req.params.alg;
+    let key;
+    let input;
 
-    if (alg != "super"){
-        let key = req.body.key && req.body.key.replace(/\s/g,'').toLowerCase().replace(/[^a-z]+/gi, '');
-        let input =  req.body.input && req.body.input.replace(/\s/g,'').toLowerCase().replace(/[^a-z]+/gi, '');
+    if (alg != "super" || alg != "affine"){
+        key = req.body.key;
+        input =  req.body.input;
+        console.log(key);
+        console.log(input);
     }
 
     if (alg == "vigenere") {
         sendData(res, "vigenere");
+    } else if (alg == "extended") {
+        sendData(res, input);
     } else if (alg == "playfair") {
         sendData(res, playfair.encrypt(key, input));
     } else if (alg == "affine"){
-        console.log(req.body.keyM, req.body.keyB, req.body.input);
         sendData(res, affine.encrypt(req.body.keyM, req.body.keyB, req.body.input));
     } else if (alg == "hill"){
         sendData(res, hill.encrypt(key, input));
@@ -50,14 +55,18 @@ app.post("/encrypt/:alg", function (req, res) {
 
 app.post("/decrypt/:alg", function (req, res) {
     const alg = req.params.alg;
+    let key;
+    let input;
 
-    if (alg != "super"){
-        let key = req.body.key && req.body.key.replace(/\s/g,'').toLowerCase().replace(/[^a-z]+/gi, '');
-        let input =  req.body.input && req.body.input.replace(/\s/g,'').toLowerCase().replace(/[^a-z]+/gi, '');
+    if (alg != "super" || alg != "affine"){
+        key = req.body.key;
+        input =  req.body.input;
     }
     
     if (alg == "vigenere") {
         sendData(res, "vigenere");
+    } else if (alg == "extended") {
+        sendData(res, input);
     } else if (alg == "playfair") {
         sendData(res, playfair.decrypt(key, input));
     } else if(alg == "affine"){

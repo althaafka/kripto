@@ -65,7 +65,7 @@
             </div>
             <label for="key" class="col-sm-2 col-form-label">Key</label>
             <div class="col-sm mb-4">
-              <input type="text" class="form-control" id="key">
+              <input type="text" class="form-control" id="key" required>
             </div>
             <label for="key" class="col-sm-2 col-form-label d-none keyB">Key</label>
             <div class="col-sm mb-4 d-none keyB">
@@ -96,6 +96,7 @@
                     </button>
                 </div>
             </div>
+
 
 
     </section>
@@ -142,11 +143,8 @@
         let input = ''
 
         const showAnswer = (data, jenisInput) => {
-            console.log(jenisInput);
-            // if (jenisInput == "Teks"){
                 $(".answer").removeClass("invisible");
                 $("#output-text").text(data.data);
-            // }
         }
 
         $('#btn-en').on('click', function(e){
@@ -154,17 +152,26 @@
             const alg = alg_dic[$("#jenisCipher").text()];
             let data = {};
 
+            const isValid = inputValidation(input, $("#key").val(), $("#keyB").val());
+            if (!isValid){
+                return;
+            }
             if (alg == "affine"){
                 data = {
                     keyM: Number($("#key").val()),
                     keyB: Number($("#keyB").val()),
-                    input: $("#exampleFormControlTextarea1").val()
+                    input: $('#jenisInput').text() == "Teks"? $("#exampleFormControlTextarea1").val().toLowerCase().replace(/[^a-z]+/gi, '') : input
                 }
-            }
-            else {
+            } else if (alg == "extended"){
                 data = {
                     key: $("#key").val(),
                     input: input
+                }
+            } else {
+                console.log($("#key").val())
+                data = {
+                    key: $("#key").val().replace(/\s/g,'').toLowerCase().replace(/[^a-z]+/gi, ''),
+                    input: input.replace(/\s/g,'').toLowerCase().replace(/[^a-z]+/gi, '')
                 }
             }
             
@@ -188,16 +195,25 @@
 
             let data = {};
 
+            const isValid = inputValidation(input, $("#key").val(), $("#keyB").val());
+            if (!isValid){
+                return;
+            }
             if (alg == "affine"){
                 data = {
                     keyM: Number($("#key").val()),
                     keyB: Number($("#keyB").val()),
-                    input: $("#exampleFormControlTextarea1").val()
+                    input: $('#jenisInput').text() == "Teks"? $("#exampleFormControlTextarea1").val().toLowerCase().replace(/[^a-z]+/gi, '') : input
+                }
+            } else if (alg == "extended"){
+                data = {
+                    key: $("#key"),
+                    input: input
                 }
             } else {
                 data = {
-                    key: $("#key").val(),
-                    input: input
+                    key: $("#key").val().replace(/\s/g,'').toLowerCase().replace(/[^a-z]+/gi, ''),
+                    input: input.replace(/\s/g,'').toLowerCase().replace(/[^a-z]+/gi, '')
                 }
             }
 
@@ -236,7 +252,7 @@
                 input = content;
                 console.log(content);
                 $(".file-plaintext").removeClass("d-none");
-                $("#file-input").text(content);
+                $("#file-input").text(content.toLowerCase().replace(/[^a-z]+/gi, ''));
             }
             reader.readAsText(file, "UTF-8");
         });
@@ -245,7 +261,47 @@
             input = $(this).val();
         });
         
-    
+        const showError = (msg) => {
+            alert(msg);
+        }
+
+        const inputValidation = (input,key1, key2='') => {
+            let alg = alg_dic[$("#jenisCipher").text()];
+            if (input.length == 0 || key1.length == 0){
+                showError("Input tidak boleh kosong");
+                return false;
+            }
+            if (alg == "affine"){
+                if (key2.length == 0 || isNaN(Number(key1)) || isNaN(Number(key2))){
+                    showError("Key M dan Key B diisi dengan angka!");
+                    return false;
+                }
+                if (gcd(Number(key2), 26) != 1){
+                    showError("Key M harus relatif prima dengan 26");
+                    return false;
+                }
+            } else if (alg == "hill"){
+                if (key1.length != 9){
+                    showError("Key berukuran 9");
+                    return false;
+                }
+            } else {
+                input = input.replace(/\s/g,'').toLowerCase().replace(/[^a-z]+/gi, '');
+                key1 = key1.replace(/\s/g,'').toLowerCase().replace(/[^a-z]+/gi, '');
+                if(input.length == 0 || key1.length == 0){
+                    showError("Input tidak boleh kosong");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        const gcd = (a, b) => {
+            if (b == 0){
+                return a;
+            }
+            return gcd(b, a % b);
+        }
     </script>
 </body>
 </html>

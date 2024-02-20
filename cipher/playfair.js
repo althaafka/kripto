@@ -108,6 +108,7 @@ const getCharIndex = (matrix, char) => {
     }
 }
 
+
 // debugging
 // let key = "jalan ganesha sepuluh";
 // let formatedKey = key.replaceAll('j','').replace(/\s/g,'');
